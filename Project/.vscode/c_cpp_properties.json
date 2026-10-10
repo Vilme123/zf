@@ -1,0 +1,34 @@
+{
+  "configurations": [
+    {
+      "name": "C251",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "D:/Keil_v5/C251/INC/**",
+        "D:/STC32G12K128_Library-master/STC32G12K128_Library-master/Seekfree_STC32G12K128_Opensource_Library/**",
+        "D:/STC32G12K128_Library-master/STC32G12K128_Library-master/Seekfree_STC32G12K128_Opensource_Library/Libraries/zf_common",
+        "D:/STC32G12K128_Library-master/STC32G12K128_Library-master/Seekfree_STC32G12K128_Opensource_Library/Libraries/zf_driver",
+        "D:/STC32G12K128_Library-master/STC32G12K128_Library-master/Seekfree_STC32G12K128_Opensource_Library/Libraries/zf_device",
+        "D:/STC32G12K128_Library-master/STC32G12K128_Library-master/Seekfree_STC32G12K128_Opensource_Library/Libraries/zf_components"
+      ],
+      "defines": [
+        "sbit=unsigned char",
+        "bit=unsigned char",
+        "sfr=unsigned char",
+        "sfr16=unsigned short",
+        "xdata=",
+        "idata=",
+        "data=",
+        "bdata=",
+        "pdata=",
+        "code=const",
+        "far=",
+        "near="
+      ],
+      "compilerPath": "",
+      "cStandard": "c99",
+      "intelliSenseMode": "windows-gcc-x86"
+    }
+  ],
+  "version": 4
+}

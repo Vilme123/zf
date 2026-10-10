@@ -1,0 +1,21 @@
+# ==================== Keil MDK 编译输出（可重新生成，不纳入版本管理）====================
+Project/mdk/out_file/
+Project/mdk/Objects/
+Project/mdk/Listings/
+Project/mdk/*.uvgui.*
+Project/mdk/*.bak
+Project/mdk/*.dep
+Project/mdk/*.scr
+Project/mdk/*.build_log.htm
+Project/mdk/JLinkLog.txt
+Project/mdk/*.lnp
+Project/mdk/*.plg
+
+# ==================== 编辑器 / 工具临时文件 ====================
+**/.vscode/uv4.log.lock
+**/.vscode/keil-assistant.log
+*.tmp
+*~
+
+# ==================== 调试过程中留下的原始文件备份 ====================
+Project/user/*.orig_backup
