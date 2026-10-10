@@ -34,9 +34,9 @@
 ********************************************************************************************************************/
 
 #include "zf_common_headfile.h"
+#include "LQ_ICM42605.h"                // ICM-42605 六轴传感器驱动，不包含会报 C140 未声明原型警告
 
-uint8 write_buff[] = {0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38};
-uint8 read_buff[8] = {0};
+int16 ax,ay,az,gx,gy,gz;
 
 void main()
 {
@@ -44,15 +44,15 @@ void main()
 	debug_init();
 	
 	// 此处编写用户代码 例如外设初始化代码等
-    iap_init();
-    iap_erase_page(0);
-    iap_write_buff(0,write_buff,8);
-    iap_read_buff(0,read_buff,8);
+    if(icm42605_init()){
+        while(1);
+    }
     while(1)
     {
 		
         // 此处编写需要循环执行的代码
-        uart_write_buffer(UART_1,read_buff,8);
-        system_delay_ms(500);
+        ICM_Get_Raw_data(&ax, &ay, &az, &gx, &gy, &gz);
+        printf("\r\nAX:%6d AY:%6d AZ:%6d GX:%6d GY:%6d GZ:%6d", ax, ay, az, gx, gy, gz);
+        system_delay_ms(100);
     }
 }
