@@ -1,58 +1,43 @@
-/*********************************************************************************************************************
-* STC32G Opensourec Library 即（STC32G 开源库）是一个基于官方 SDK 接口的第三方开源库
-* Copyright (c) 2022 SEEKFREE 逐飞科技
-*
-* 本文件是STC 开源库的一部分
-*
-* STC32G 开源库 是免费软件
-* 您可以根据自由软件基金会发布的 GPL（GNU General Public License，即 GNU通用公共许可证）的条款
-* 即 GPL 的第3版（即 GPL3.0）或（您选择的）任何后来的版本，重新发布和/或修改它
-*
-* 本开源库的发布是希望它能发挥作用，但并未对其作任何的保证
-* 甚至没有隐含的适销性或适合特定用途的保证
-* 更多细节请参见 GPL
-*
-* 您应该在收到本开源库的同时收到一份 GPL 的副本
-* 如果没有，请参阅<https://www.gnu.org/licenses/>
-*
-* 额外注明：
-* 本开源库使用 GPL3.0 开源许可证协议 以上许可申明为译文版本
-* 许可申明英文版在 libraries/doc 文件夹下的 GPL3_permission_statement.txt 文件中
-* 许可证副本在 libraries 文件夹下 即该文件夹下的 LICENSE 文件
-* 欢迎各位使用并传播本程序 但修改内容时必须保留逐飞科技的版权声明（即本声明）
-*
-* 文件名称          
-* 公司名称          成都逐飞科技有限公司
-* 版本信息          查看 libraries/doc 文件夹内 version 文件 版本说明
-* 开发环境          MDK FOR C251
-* 适用平台          STC32G
-* 店铺链接          https://seekfree.taobao.com/
-*
-* 修改记录
-* 日期              作者           备注
-* 2024-08-01        大W            first version
-********************************************************************************************************************/
-
 #include "zf_common_headfile.h"
-#include "LQ_ICM42605.h"                // ICM-42605 六轴传感器驱动，不包含会报 C140 未声明原型警告
+#include "LQ_ICM42605.h"
+#include "ICM42605jiesuan.h"
 
-int16 ax,ay,az,gx,gy,gz;
+volatile int16 ax, ay, az, gx, gy, gz;
 
-void main()
+int print_count = 0; 
+
+void pit_handler(void)
+{
+    ICM_Get_Raw_data(&ax, &ay, &az, &gx, &gy, &gz);
+    IMU_Update(ax, ay, az, gx, gy, gz);
+}
+
+void main(void)
 {
     clock_init(SYSTEM_CLOCK_30M);
-	debug_init();
-	
-	// 此处编写用户代码 例如外设初始化代码等
+    debug_init();
+    
+    pit_ms_init(TIM0_PIT, 1);
     if(icm42605_init()){
         while(1);
     }
+    
+    tim0_irq_handler = pit_handler; 
+    
+    // 【新增点】进入死循环前，暴力清除开机晃动带来的任何历史杂波角度
+    yaw = 0.0f;
+    pitch = 0.0f;
+    roll = 0.0f;
+    
     while(1)
     {
-		
-        // 此处编写需要循环执行的代码
-        ICM_Get_Raw_data(&ax, &ay, &az, &gx, &gy, &gz);
-        printf("\r\nAX:%6d AY:%6d AZ:%6d GX:%6d GY:%6d GZ:%6d", ax, ay, az, gx, gy, gz);
-        system_delay_ms(100);
+        print_count++;
+        if(print_count >= 50) 
+        {
+            print_count = 0;
+            printf("%.3f,%.3f,%.3f \n", yaw, pitch, roll);
+        }
+        
+        system_delay_ms(1);
     }
 }

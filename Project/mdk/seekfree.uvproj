@@ -774,6 +774,16 @@
               <FileType>5</FileType>
               <FilePath>..\user\LQ_ICM42605.h</FilePath>
             </File>
+            <File>
+              <FileName>ICM42605jiesuan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\ICM42605jiesuan.c</FilePath>
+            </File>
+            <File>
+              <FileName>ICM42605jiesuan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\ICM42605jiesuan.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

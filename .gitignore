@@ -19,3 +19,4 @@ Project/mdk/*.plg
 
 # ==================== 调试过程中留下的原始文件备份 ====================
 Project/user/*.orig_backup
+Project/user/*.before_revert_backup
