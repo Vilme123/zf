@@ -99,6 +99,8 @@
 #include "seekfree_assistant.h"
 
 #include "seekfree_assistant_interface.h"
+//-----user
+#include "ICM42605jiesuan.h"
 
 
 #endif

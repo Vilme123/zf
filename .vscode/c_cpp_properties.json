@@ -1,16 +1,16 @@
 {
   "configurations": [
     {
-      "name": "windows-gcc-x64",
+      "name": "C251",
       "includePath": [
         "${workspaceFolder}/**",
         "D:/Keil_v5/C251/INC/**",
-        "${workspaceFolder}/Project/user",
-        "${workspaceFolder}/Project/code",
         "${workspaceFolder}/Libraries/zf_common",
         "${workspaceFolder}/Libraries/zf_driver",
         "${workspaceFolder}/Libraries/zf_device",
-        "${workspaceFolder}/Libraries/zf_components"
+        "${workspaceFolder}/Libraries/zf_components",
+        "${workspaceFolder}/Project/user",
+        "${workspaceFolder}/Project/code"
       ],
       "defines": [
         "sbit=unsigned char",
@@ -26,10 +26,9 @@
         "far=",
         "near="
       ],
-      "compilerPath": "D:/MinGW64/MinGW64/bin/gcc.exe",
-      "cStandard": "${default}",
-      "intelliSenseMode": "windows-gcc-x64",
-      "cppStandard": "${default}"
+      "compilerPath": "",
+      "cStandard": "c99",
+      "intelliSenseMode": "windows-gcc-x86"
     }
   ],
   "version": 4

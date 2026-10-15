@@ -32,15 +32,16 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #include "zf_driver_spi.h"
 
 //====================================================逐飞库 硬件 SPI 配置====================================================
-// ICM42605 与单片机接线：SCLK->P25  MOSI(SDI)->P23  MISO(SDO)->P24  CS->P26  VCC->3.3V  GND->GND
+// ICM42605 与单片机接线：SCLK->P43  MOSI(SDI)->P40  MISO(SDO)->P41  CS->P42  VCC->3.3V  GND->GND
+// 注意：IPS 屏(ips114)占用 P2 口(SCK P2.5 / MOSI P2.3 / CS P2.2 等) 所以 ICM42605 改用 SPI_0 第 3 通道(P4 口)
 #define ICM42605_SPI                        (SPI_0)                             // 使用的 SPI 模块 参照 zf_driver_spi.h 内 spi_index_enum
 #define ICM42605_SPI_MODE                   (SPI_MODE3)                         // SPI 模式 ICM42605 支持模式0与模式3 此设置与原模拟SPI时序一致
 #define ICM42605_SPI_SPEED                  (1 * 1000 * 1000)                   // 期望的 SPI 速率 实际速率会被适配成 系统时钟/4 8 16 2 中最接近的一个
-#define ICM42605_SPI_SCK_PIN                (SPI0_CH2_SCLK_P25)                 // 硬件 SPI SCK  引脚 参照 zf_driver_spi.h 内 spi_pin_enum
-#define ICM42605_SPI_MOSI_PIN               (SPI0_CH2_MOSI_P23)                 // 硬件 SPI MOSI 引脚
-#define ICM42605_SPI_MISO_PIN               (SPI0_CH2_MISO_P24)                 // 硬件 SPI MISO 引脚
-#define ICM42605_SPI_CS_PIN                 (IO_P26)                            // CS 片选引脚 参照 zf_driver_gpio.h 内 gpio_pin_enum
-#define ICM42605_SPI_CS(x)                  (P26 = x)                           // CS 片选控制 低电平有效
+#define ICM42605_SPI_SCK_PIN                (SPI0_CH3_SCLK_P43)                 // 硬件 SPI SCK  引脚 参照 zf_driver_spi.h 内 spi_pin_enum
+#define ICM42605_SPI_MOSI_PIN               (SPI0_CH3_MOSI_P40)                 // 硬件 SPI MOSI 引脚
+#define ICM42605_SPI_MISO_PIN               (SPI0_CH3_MISO_P41)                 // 硬件 SPI MISO 引脚
+#define ICM42605_SPI_CS_PIN                 (IO_P42)                            // CS 片选引脚 参照 zf_driver_gpio.h 内 gpio_pin_enum
+#define ICM42605_SPI_CS(x)                  (P42 = x)                           // CS 片选控制 低电平有效
 //====================================================逐飞库 硬件 SPI 配置====================================================
 
 #define fifo_packet_structure_size   16

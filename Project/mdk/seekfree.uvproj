@@ -784,6 +784,26 @@
               <FileType>5</FileType>
               <FilePath>..\user\ICM42605jiesuan.h</FilePath>
             </File>
+            <File>
+              <FileName>menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>menu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\menu.h</FilePath>
+            </File>
+            <File>
+              <FileName>debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\user\debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\debug.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

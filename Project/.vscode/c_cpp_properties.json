@@ -4,12 +4,14 @@
       "name": "C251",
       "includePath": [
         "${workspaceFolder}/**",
-        "D:/Keil_v5/C251/INC/**",
-        "D:/STC32G12K128_Library-master/STC32G12K128_Library-master/Seekfree_STC32G12K128_Opensource_Library/**",
-        "D:/STC32G12K128_Library-master/STC32G12K128_Library-master/Seekfree_STC32G12K128_Opensource_Library/Libraries/zf_common",
-        "D:/STC32G12K128_Library-master/STC32G12K128_Library-master/Seekfree_STC32G12K128_Opensource_Library/Libraries/zf_driver",
-        "D:/STC32G12K128_Library-master/STC32G12K128_Library-master/Seekfree_STC32G12K128_Opensource_Library/Libraries/zf_device",
-        "D:/STC32G12K128_Library-master/STC32G12K128_Library-master/Seekfree_STC32G12K128_Opensource_Library/Libraries/zf_components"
+        "${workspaceFolder}/../**",
+        "D:/Keil_v5/C251/INC",
+        "${workspaceFolder}/user",
+        "${workspaceFolder}/code",
+        "${workspaceFolder}/../Libraries/zf_common",
+        "${workspaceFolder}/../Libraries/zf_driver",
+        "${workspaceFolder}/../Libraries/zf_device",
+        "${workspaceFolder}/../Libraries/zf_components"
       ],
       "defines": [
         "sbit=unsigned char",
