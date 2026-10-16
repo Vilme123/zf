@@ -10,6 +10,8 @@ Project/mdk/*.build_log.htm
 Project/mdk/JLinkLog.txt
 Project/mdk/*.lnp
 Project/mdk/*.plg
+Project/mdk/*.log
+Project/mdk/*probe*.bat
 
 # ==================== 编辑器 / 工具临时文件 ====================
 **/.vscode/uv4.log.lock

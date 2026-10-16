@@ -101,6 +101,11 @@
 #include "seekfree_assistant_interface.h"
 //-----user
 #include "ICM42605jiesuan.h"
+#include "LQ_ICM42605.h"
+#include "menu.h"
+#include "debug.h"
+#include "init.h"
+#include "key.h"
 
 
 #endif

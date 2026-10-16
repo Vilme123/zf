@@ -16,16 +16,19 @@
 
 | ICM-42605 | STC32G12K128 | 说明 |
 | :--- | :--- | :--- |
-| SCLK / SPC | **P2.5** | 硬件 SPI_0 CH2 时钟 |
-| SDI / MOSI | **P2.3** | 主出从入 |
-| SDO / MISO | **P2.4** | 主入从出 |
-| CS | **P2.6** | 片选，软件控制，低电平有效 |
+| SCLK / SPC | **P4.3** | 硬件 SPI_0 CH3 时钟 |
+| SDI / MOSI | **P4.0** | 主出从入 |
+| SDO / MISO | **P4.1** | 主入从出 |
+| CS | **P4.2** | 片选，软件控制，低电平有效 |
 | VCC | 3.3V | 不要接 5V |
 | GND | GND | |
 
 > ⚠️ **STC32G 的硬件 SPI 只能使用固定的引脚组**（P1.3/1.4/1.5、P2.3/2.4/2.5、P3.2/3.3/3.4、
-> P4.0/4.1/4.3、P6.5/6.6/6.7、P7.5/7.6/7.7）。原龙邱代码里的 `PTE2~PTE5` 做不了硬件 SPI，
-> 所以接线必须按上表调整。
+> P4.0/4.1/4.3、P6.5/6.6/6.7、P7.5/7.6/7.7），同一通道的三个脚不能拆开单独换。原龙邱代码里的
+> `PTE2~PTE5` 做不了硬件 SPI，所以接线必须按上表调整。
+>
+> 另外 **IPS 屏已经占用了 P2 口的 P2.0/P2.1/P2.2/P2.3/P2.5/P2.7**（见下一节），所以 ICM-42605
+> 不能再和屏共用 `SPI_0 CH2`，本工程改用 `SPI_0` 的第 3 通道（P4 口）避开冲突。
 
 **SPI 参数**：模块 `SPI_0` ／ 模式 `SPI_MODE3` ／ 期望速率 1MHz
 （库会把速率适配成 系统时钟/4、/8、/16、/2 中最接近的一档，30MHz 下实际约 **1.875MHz**）
@@ -36,12 +39,44 @@
 #define ICM42605_SPI            (SPI_0)                  // SPI 模块
 #define ICM42605_SPI_MODE       (SPI_MODE3)              // ICM-42605 支持模式0/模式3
 #define ICM42605_SPI_SPEED      (1 * 1000 * 1000)        // 期望速率
-#define ICM42605_SPI_SCK_PIN    (SPI0_CH2_SCLK_P25)      // SCK
-#define ICM42605_SPI_MOSI_PIN   (SPI0_CH2_MOSI_P23)      // MOSI
-#define ICM42605_SPI_MISO_PIN   (SPI0_CH2_MISO_P24)      // MISO
-#define ICM42605_SPI_CS_PIN     (IO_P26)                 // CS
-#define ICM42605_SPI_CS(x)      (P26 = x)                // CS 电平控制
+#define ICM42605_SPI_SCK_PIN    (SPI0_CH3_SCLK_P43)      // SCK
+#define ICM42605_SPI_MOSI_PIN   (SPI0_CH3_MOSI_P40)      // MOSI
+#define ICM42605_SPI_MISO_PIN   (SPI0_CH3_MISO_P41)      // MISO
+#define ICM42605_SPI_CS_PIN     (IO_P42)                 // CS
+#define ICM42605_SPI_CS(x)      (P42 = x)                // CS 电平控制
 ```
+
+---
+
+## 一之二、1.14 寸 IPS 屏接线（135×240 ST7789V，逐飞 `ips114` 驱动）
+
+| IPS 模块 | STC32G12K128 | 说明 |
+| :--- | :--- | :--- |
+| SCK | **P2.5** | 硬件 SPI_2 CH2 时钟 |
+| SDI / MOSI | **P2.3** | 主出从入 |
+| SDO / MISO | **悬空不接** | 本屏只写不读，驱动初始化时 MISO 传 `SPI_MISO_NULL` |
+| CS | **P2.2** | 片选，软件控制，低电平有效 |
+| DC | **P2.1** | 命令/数据选择（0=命令，1=数据） |
+| RST | **P2.0** | 复位，低电平有效 |
+| BLK | **P2.7** | 背光，高电平点亮 |
+| VCC | 3.3V | |
+| GND | GND | |
+
+改引脚只需编辑 `Libraries/zf_device/zf_device_ips114.h` 中的 `IPS114_*_PIN` 宏：
+
+```c
+#define IPS114_SPI          (SPI_2)                  // 硬件 SPI 号
+#define IPS114_SCL_PIN      (SPI2_CH2_SCLK_P25)      // SCK  -> P2.5
+#define IPS114_SDA_PIN      (SPI2_CH2_MOSI_P23)      // MOSI -> P2.3
+#define IPS114_RST_PIN      (P20)                    // RST  -> P2.0
+#define IPS114_DC_PIN       (P21)                    // DC   -> P2.1
+#define IPS114_CS_PIN       (P22)                    // CS   -> P2.2
+#define IPS114_BLK_PIN      (P27)                    // BLK  -> P2.7
+```
+
+> ⚠️ `SPI2_CH2` 这一组硬件 SPI 的引脚是**固定的三只脚**：SCK=P2.5、MOSI=P2.3、MISO=P2.4，
+> 不能拆开单独换脚——所以 P2.1 **不可能**作为本组 SPI 的 MISO，它在本工程里用作屏的 DC。
+> 如果以后要读回屏的数据，只能把屏的 SDO 接到 P2.4，并把 DC 挪到其它空闲 IO。
 
 ---
 
@@ -142,7 +177,7 @@ void main(void)
 | 项目 | 原来（龙邱 K66） | 现在（逐飞 STC32G 库） |
 | :--- | :--- | :--- |
 | SPI 实现 | `SPI_SoftInit()` 逐个配置 GPIO + 循环翻 IO 口模拟时序 | `spi_init()` 初始化硬件 SPI + `spi_transfer_8bit()` 收发 |
-| 片选 CS | 宏直接操作 PTE5 | 宏直接操作 `P26`，`spi_init()` 传 `SPI_CS_NULL` 由软件控制 |
+| 片选 CS | 宏直接操作 PTE5 | 宏直接操作 `P42`，`spi_init()` 传 `SPI_CS_NULL` 由软件控制 |
 | 头文件 | `#include "include.h"`（龙邱库） | `#include "zf_common_headfile.h"` |
 | 数据类型 | `uint8_t` / `uint16_t` / `int16_t` | 逐飞库的 `uint8` / `uint16` / `int16` |
 | 延时 | `delayms()` | `system_delay_ms()` |

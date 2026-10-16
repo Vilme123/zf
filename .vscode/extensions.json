@@ -1,3 +1,8 @@
 {
-    "recommendations": []
+    "recommendations": [],
+    "unwantedRecommendations": [
+        "franneck94.c-cpp-runner",
+        "formulahendry.code-runner",
+        "ms-vscode.cpptools-extension-pack"
+    ]
 }
